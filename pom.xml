@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.javamagazin.activiti.spring</groupId>
+    <artifactId>activiti-spring</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>activiti-spring</name>
+
+    <modules>
+        <module>activiti-spring-domain</module>
+        <module>activiti-spring-persistence</module>
+        <module>activiti-spring-process</module>
+        <module>activiti-spring-engine</module>
+    </modules>
+
+    <properties>
+        <!-- Build properties -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <!-- Maven plugin versions -->
+        <maven-compiler.version>2.5.1</maven-compiler.version>
+
+        <!-- Framework/Library versions -->
+        <activiti.version>5.10</activiti.version>
+        <flexjson.version>2.1</flexjson.version>
+        <h2.version>1.3.166</h2.version>
+        <hibernate.version>4.1.6.Final</hibernate.version>
+        <joda.version>2.1</joda.version>
+        <junit.version>4.10</junit.version>
+        <spring.version>3.1.2.RELEASE</spring.version>
+        <spring-data-jpa.version>1.1.0.RELEASE</spring-data-jpa.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Activiti -->
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-engine</artifactId>
+                <version>${activiti.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-spring</artifactId>
+                <version>${activiti.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+            </dependency>
+
+            <!-- Spring -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>${spring-data-jpa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+            <!-- Hibernate -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+
+            <!-- External libraries -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.flexjson</groupId>
+                <artifactId>flexjson</artifactId>
+                <version>${flexjson.version}</version>
+            </dependency>
+
+            <!-- Testing -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Internal -->
+            <dependency>
+                <groupId>de.javamagazin.activiti.spring</groupId>
+                <artifactId>activiti-spring-engine</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.javamagazin.activiti.spring</groupId>
+                <artifactId>activiti-spring-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.javamagazin.activiti.spring</groupId>
+                <artifactId>activiti-spring-persistence</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.javamagazin.activiti.spring</groupId>
+                <artifactId>activiti-spring-process</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler.version}</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>springframework.maven.release</id>
+            <name>Spring Framework Maven Release Repository</name>
+            <url>http://maven.springframework.org/release</url>
+        </repository>
+        <repository>
+            <id>activiti.maven</id>
+            <name>Activiti Maven Repository</name>
+            <url>http://maven.alfresco.com/nexus/content/repositories/activiti/</url>
+        </repository>
+    </repositories>
+
+</project>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>activiti-spring</artifactId>
+        <groupId>de.javamagazin.activiti.spring</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>activiti-spring-process</artifactId>
+    <name>activiti-spring-process</name>
+    <packaging>war</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.javamagazin.activiti.spring</groupId>
+            <artifactId>activiti-spring-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.javamagazin.activiti.spring</groupId>
+            <artifactId>activiti-spring-engine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.javamagazin.activiti.spring</groupId>
+            <artifactId>activiti-spring-persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

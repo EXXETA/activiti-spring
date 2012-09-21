@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="purchaseProcess" name="Purchase Process">
+    <startEvent id="start" name="Start"></startEvent>
+    <endEvent id="end" name="End"></endEvent>
+    <endEvent id="errorEnd" name="Error End">
+      <errorEventDefinition errorRef="generalerror"></errorEventDefinition>
+    </endEvent>
+    <exclusiveGateway id="checkPurchaseValid" name="Check Purchase Valid" default="validatePurchaseResultNotOk"></exclusiveGateway>
+    <serviceTask id="validatePurchase" name="Validate Purchase" activiti:expression="#{@purchaseUtils.validatePurchase(#CUSTOMER.id, #PRODUCT_ID)}" activiti:resultVariableName="validatePurchaseResult"></serviceTask>
+    <serviceTask id="updateCustomer" name="Update Customer" activiti:expression="#{@customerFacade.updateCustomer(#CUSTOMER)}" activiti:resultVariableName="validatePurchaseResult"></serviceTask>
+    <serviceTask id="createContract" name="Create Contract" activiti:expression="#{@contractFacade.createContract(#CUSTOMER.id, #PRODUCT_ID)}" activiti:resultVariableName="CONTRACT_ID"></serviceTask>
+    <serviceTask id="createInvoice" name="Create Invoice" activiti:expression="#{@billingFacade.createInvoice(#CONTRACT_ID)}"></serviceTask>
+    <sequenceFlow id="validatePurchaseResultOk" name="" sourceRef="checkPurchaseValid" targetRef="updateCustomer">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[#{#validatePurchaseResult}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="validatePurchaseResultNotOk" name="" sourceRef="checkPurchaseValid" targetRef="errorEnd"></sequenceFlow>
+    <sequenceFlow id="startOk" name="" sourceRef="start" targetRef="validatePurchase"></sequenceFlow>
+    <sequenceFlow id="validatePurchaseOk" name="" sourceRef="validatePurchase" targetRef="checkPurchaseValid"></sequenceFlow>
+    <sequenceFlow id="updateCustomerOk" name="" sourceRef="updateCustomer" targetRef="createContract"></sequenceFlow>
+    <sequenceFlow id="createContractOk" name="" sourceRef="createContract" targetRef="createInvoice"></sequenceFlow>
+    <sequenceFlow id="createInvoiceOk" name="" sourceRef="createInvoice" targetRef="end"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_purchaseProcess">
+    <bpmndi:BPMNPlane bpmnElement="purchaseProcess" id="BPMNPlane_purchaseProcess">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35" width="35" x="30" y="150"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35" width="35" x="740" y="150"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="errorEnd" id="BPMNShape_errorEnd">
+        <omgdc:Bounds height="35" width="35" x="740" y="29"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="checkPurchaseValid" id="BPMNShape_checkPurchaseValid">
+        <omgdc:Bounds height="40" width="40" x="242" y="147"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="validatePurchase" id="BPMNShape_validatePurchase">
+        <omgdc:Bounds height="55" width="105" x="100" y="140"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="updateCustomer" id="BPMNShape_updateCustomer">
+        <omgdc:Bounds height="55" width="105" x="316" y="140"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="createContract" id="BPMNShape_createContract">
+        <omgdc:Bounds height="55" width="105" x="460" y="140"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="createInvoice" id="BPMNShape_createInvoice">
+        <omgdc:Bounds height="55" width="105" x="600" y="140"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="validatePurchaseResultOk" id="BPMNEdge_validatePurchaseResultOk">
+        <omgdi:waypoint x="282" y="167"></omgdi:waypoint>
+        <omgdi:waypoint x="316" y="167"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="validatePurchaseResultNotOk" id="BPMNEdge_validatePurchaseResultNotOk">
+        <omgdi:waypoint x="262" y="147"></omgdi:waypoint>
+        <omgdi:waypoint x="261" y="46"></omgdi:waypoint>
+        <omgdi:waypoint x="740" y="46"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="startOk" id="BPMNEdge_startOk">
+        <omgdi:waypoint x="65" y="167"></omgdi:waypoint>
+        <omgdi:waypoint x="100" y="167"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="validatePurchaseOk" id="BPMNEdge_validatePurchaseOk">
+        <omgdi:waypoint x="205" y="167"></omgdi:waypoint>
+        <omgdi:waypoint x="242" y="167"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="updateCustomerOk" id="BPMNEdge_updateCustomerOk">
+        <omgdi:waypoint x="421" y="167"></omgdi:waypoint>
+        <omgdi:waypoint x="460" y="167"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14" width="100" x="10" y="0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="createContractOk" id="BPMNEdge_createContractOk">
+        <omgdi:waypoint x="565" y="167"></omgdi:waypoint>
+        <omgdi:waypoint x="600" y="167"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14" width="100" x="10" y="0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="createInvoiceOk" id="BPMNEdge_createInvoiceOk">
+        <omgdi:waypoint x="705" y="167"></omgdi:waypoint>
+        <omgdi:waypoint x="740" y="167"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14" width="100" x="10" y="0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
